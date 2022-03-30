@@ -1,0 +1,107 @@
+﻿@model IEnumerable<CorretoraABC.Dominio.Entidades.PrecoAtivo>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    <title>Corretora ABC</title>
+</head>
+<body>
+    <div id="chartContainer"></div>
+
+    <script type="text/javascript">
+        window.onload = function () {
+            var dataPoints = [];
+            dataPoints = @Html.Raw(ViewBag.DataPoints);
+            var chart = new CanvasJS.Chart("chartContainer", {
+                theme: "light2",
+                zoomEnabled: true,
+                animationEnabled: true,
+                title: {
+                    text: "Historical Price"
+                },
+                axisY: {
+                        title: "Close Value",
+                        titleFontSize: 24
+                    },
+                axisX: {
+                    labelFormatter: function (e) {
+                        return CanvasJS.formatDate( e.value, "DD-MMM-YY");
+                    },
+                },
+                data: [
+                {
+                    type: "line",
+                    yValueFormatString: "$#,##0.##",
+                    xValueType: "dateTime",
+                    dataPoints: dataPoints
+                }
+                ]
+            });
+
+            chart.render();
+        };
+    </script>
+    <div id="chartContainer" style="width:100%; height:400px;"> </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Date)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.OpenPrice)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.HighPrice)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LowPrice)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ClosePrice)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.AdjClosePrice)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Volume)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Date)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OpenPrice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.HighPrice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LowPrice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ClosePrice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AdjClosePrice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Volume)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>	
