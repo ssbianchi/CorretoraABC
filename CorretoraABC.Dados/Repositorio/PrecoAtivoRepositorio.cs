@@ -14,7 +14,7 @@ namespace CorretoraABC.Dados.Repositorio
     {
         public async Task<IList<PrecoAtivo>> ListarPrecoHistorico()
         {
-            var result = await Yahoo.GetHistoricalAsync("petr4.sa", new DateTime(2021, 03, 21), new DateTime(2022, 03, 28), Period.Daily);
+            var result = await Yahoo.GetHistoricalAsync("petr4.sa", new DateTime(2019, 03, 21), new DateTime(2022, 03, 28), Period.Daily);
             var convert = result.Where(a => a.Close != 0)
                                            .OrderByDescending(a => a.DateTime)
                                            .ToList()
